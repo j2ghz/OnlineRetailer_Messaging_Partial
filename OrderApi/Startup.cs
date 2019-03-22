@@ -26,8 +26,9 @@ namespace OrderApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // In-memory database:
-            services.AddDbContext<OrderApiContext>(opt => opt.UseInMemoryDatabase("OrdersDb"));
+            // SQL server database running in a Docker container (the connection string is defined
+            // as an environment variablein docker-compose.yml):
+            services.AddDbContext<OrderApiContext>(opt => opt.UseSqlServer(Configuration["ConnectionString"]));
 
             // Register order repository for dependency injection
             services.AddScoped<IRepository<Order>, OrderRepository>();
@@ -36,7 +37,7 @@ namespace OrderApi
             services.AddTransient<IDbInitializer, DbInitializer>();
 
             // Register product service gateway for dependency injection
-            services.AddSingleton<IServiceGateway<Product>>(new 
+            services.AddSingleton<IServiceGateway<Product>>(new
                 ProductServiceGateway(productServiceBaseUrl));
 
             // Register MessagePublisher (a messaging gateway) for dependency injection

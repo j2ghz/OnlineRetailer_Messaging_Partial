@@ -25,8 +25,13 @@ namespace ProductApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // In-memory database:
-            services.AddDbContext<ProductApiContext>(opt => opt.UseInMemoryDatabase("ProductsDb"));
+            // SQL server database running in a Docker container (the connection string is defined
+            // as an environment variablein docker-compose.yml):
+            services.AddDbContext<ProductApiContext>(opt => opt.UseSqlServer(Configuration["ConnectionString"]));
+
+            services.AddDbContext<ProductApiContext>(opt => opt.UseSqlServer(
+                "Server=sql.data;Initial Catalog=ProductDb;User Id=sa;Password=Your!Passw0rd"
+            ));
 
             // Register repositories for dependency injection
             services.AddScoped<IRepository<Product>, ProductRepository>();

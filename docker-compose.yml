@@ -6,10 +6,25 @@ services:
     build:
       context: .
       dockerfile: ProductApi/Dockerfile
-
+    environment:
+      - ConnectionString=Server=sql.data;Initial Catalog=ProductDb;User Id=sa;Password=Your!Passw0rd
+    depends_on:
+      - sql.data
+      
   orderapi:
     image: ${DOCKER_REGISTRY-}orderapi
     build:
       context: .
       dockerfile: OrderApi/Dockerfile
-
+    environment:
+      - ConnectionString=Server=sql.data;Initial Catalog=OrderDb;User Id=sa;Password=Your!Passw0rd
+    depends_on:
+      - sql.data
+    
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+    environment:
+      - SA_PASSWORD=Your!Passw0rd
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"

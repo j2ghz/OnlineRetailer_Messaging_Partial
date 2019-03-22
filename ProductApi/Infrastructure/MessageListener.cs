@@ -27,7 +27,7 @@ namespace ProductApi.Infrastructure
 
             using (var bus = RabbitHutch.CreateBus(connectionString))
             {
-                bus.Subscribe<OrderStatusChangedMessage>("productApi", 
+                bus.Subscribe<OrderStatusChangedMessage>("productApiHkCompleted", 
                     ReserveItems, x => x.WithTopic("orderCompleted"));
 
                 // Block the thread so that it will not exit and stop subscribing.
