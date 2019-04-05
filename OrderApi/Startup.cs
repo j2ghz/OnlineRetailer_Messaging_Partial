@@ -14,7 +14,7 @@ namespace OrderApi
     public class Startup
     {
         Uri productServiceBaseUrl = new Uri("http://productapi/api/products/");
-        string cloudAMQPConnectionString = "host=hare.rmq.cloudamqp.com;virtualHost=npaprqop;username=npaprqop;password=TnP46q2gwIcrbfebFLHTk1PGI8j3-vbA";
+        string cloudAMQPConnectionString = "host=hare.rmq.cloudamqp.com;virtualHost=npaprqop;username=npaprqop;password=JZLX_IQBYSU9DYOahSnxf8JUagX9KxJq";
 
         public Startup(IConfiguration configuration)
         {

@@ -1,6 +1,14 @@
 version: '3.4'
 
 services:
+  onlineretailerapigateway:
+    image: ${DOCKER_REGISTRY-}onlineretailerapigateway
+    build:
+      context: .
+      dockerfile: OnlineRetailerApiGateway/Dockerfile
+    ports:
+    - "7000:80"      
+
   productapi:
     image: ${DOCKER_REGISTRY-}productapi
     build:
@@ -8,6 +16,8 @@ services:
       dockerfile: ProductApi/Dockerfile
     environment:
       - ConnectionString=Server=sql.data;Initial Catalog=ProductDb;User Id=sa;Password=Your!Passw0rd
+    ports:
+    - "7001:80"
     depends_on:
       - sql.data
       
@@ -18,6 +28,8 @@ services:
       dockerfile: OrderApi/Dockerfile
     environment:
       - ConnectionString=Server=sql.data;Initial Catalog=OrderDb;User Id=sa;Password=Your!Passw0rd
+    ports:
+    - "7002:80"
     depends_on:
       - sql.data
     
@@ -28,3 +40,4 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5434:1433"
+

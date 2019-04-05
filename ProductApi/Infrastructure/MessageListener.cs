@@ -23,8 +23,6 @@ namespace ProductApi.Infrastructure
 
         public void Start()
         {
-            //string connectionStr = "host=hare.rmq.cloudamqp.com;virtualHost=npaprqop;username=npaprqop;password=TnP46q2gwIcrbfebFLHTk1PGI8j3-vbA";
-
             using (var bus = RabbitHutch.CreateBus(connectionString))
             {
                 bus.Subscribe<OrderStatusChangedMessage>("productApiHkCompleted", 
